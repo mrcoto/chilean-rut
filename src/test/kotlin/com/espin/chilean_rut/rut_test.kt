@@ -1,9 +1,7 @@
 package com.espin.chilean_rut
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import java.lang.IllegalArgumentException
+import kotlin.test.*
 
 class RutTests {
 
@@ -76,8 +74,27 @@ class RutTests {
 
     @Test fun test_ShouldParseStrings() {
         // 19253299-k
-        val ruts = arrayOf("19253299-k", "19253299k", "19.253.299-k", "19.253.299k")
+        val ruts = arrayOf("19253299-k", "19253299k", "19.253.299-k", "19.253.299k", "19.253.299K")
         ruts.forEach { assertTrue(Rut.parse(it).isValid()) }
+    }
+
+    @Test fun test_ShouldThrowException_OnInvalidRut() {
+        val ruts = arrayOf(
+            "",
+            "1.2",
+            "12.345.67c",
+            "1a.345.678",
+            "7.6543.21",
+            "123.456.78",
+            "12.345.678.345",
+            "12,345,678",
+            "0"
+        );
+        ruts.forEach {
+            assertFailsWith(IllegalArgumentException::class) {
+                Rut.parse(it)
+            }
+        }
     }
 
 }

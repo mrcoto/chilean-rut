@@ -10,7 +10,8 @@ class Rut(number: String, dv: String) {
     val dv: String
 
     companion object Util {
-        private const val numberRgx = ""
+        private const val numberRgx = """^[1-9][0-9]?((\.\d{3}|\d{3})){0,2}$"""
+        private const val ZERO = "0"
         private const val K = "k"
         private const val ELEVEN = 11
         private const val TEN = 10
@@ -19,11 +20,11 @@ class Rut(number: String, dv: String) {
         private const val MAX_RANGE = 80_000_000
 
         fun parse(rut: String) : Rut {
+            if (rut.isEmpty() || rut == ZERO)
+                return Rut("", "")
             val dv = if (rut.isNotEmpty()) rut[rut.length - 1].toString() else ""
             val sub = rut.substring(0, rut.length - 1)
             val number =  if (sub[sub.length - 1] == '-') sub.substring(0, sub.length - 1) else sub
-            println("sub: $sub, number: $number, dv: $dv")
-            // "19253299-k", "19253299k", "19.253.299-k", "19.253.299k"
             return Rut(number, dv)
         }
 
@@ -40,7 +41,7 @@ class Rut(number: String, dv: String) {
         }
 
         private fun dvFromResult(result: Int) : String = when(result) {
-            ELEVEN -> "0"
+            ELEVEN -> ZERO
             TEN -> K
             else -> result.toString()
         }
@@ -59,12 +60,10 @@ class Rut(number: String, dv: String) {
     }
 
     init {
-//        require(isValidNumber(number)){ "Formato Inválido" }
+        require(number.matches(numberRgx.toRegex())){ "Formato Inválido" }
         this.number = number.replace(".", "").toInt()
         this.dv = dv.toLowerCase()
     }
-
-    fun isValidNumber(number: String) : Boolean = number.matches(numberRgx.toRegex())
 
     fun isValid() : Boolean = calcDv(number) == dv
 

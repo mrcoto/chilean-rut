@@ -57,4 +57,21 @@ class RutTests {
         assertEquals("156052868", Rut("15605286", "8").format(Rut.FORMAT.ESCAPED))
     }
 
+    @Test fun test_ShouldDestructureInComponents() {
+        val rut = Rut("1", "9")
+        val (number, dv) = rut
+        assertEquals(1, number)
+        assertEquals("9", dv)
+    }
+
+    @Test fun test_ShouldGiveRandom() {
+        val rut = Rut.random()
+        assertTrue(rut.isValid())
+    }
+
+    @Test fun test_ShouldGiveRandoms() {
+        val ruts = Rut.randoms(42)
+        assertEquals(42, ruts.size)
+    }
+
 }

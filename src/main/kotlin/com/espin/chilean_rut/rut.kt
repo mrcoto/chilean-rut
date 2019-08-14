@@ -18,6 +18,15 @@ class Rut(number: String, dv: String) {
         private const val MIN_RANGE = 4_000_000
         private const val MAX_RANGE = 80_000_000
 
+        fun parse(rut: String) : Rut {
+            val dv = if (rut.isNotEmpty()) rut[rut.length - 1].toString() else ""
+            val sub = rut.substring(0, rut.length - 1)
+            val number =  if (sub[sub.length - 1] == '-') sub.substring(0, sub.length - 1) else sub
+            println("sub: $sub, number: $number, dv: $dv")
+            // "19253299-k", "19253299k", "19.253.299-k", "19.253.299k"
+            return Rut(number, dv)
+        }
+
         fun calcDv(number: Int) : String {
             var copy = number
             var sum = 0
@@ -51,7 +60,7 @@ class Rut(number: String, dv: String) {
 
     init {
 //        require(isValidNumber(number)){ "Formato Inválido" }
-        this.number = number.toInt()
+        this.number = number.replace(".", "").toInt()
         this.dv = dv.toLowerCase()
     }
 

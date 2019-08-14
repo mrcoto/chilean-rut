@@ -10,7 +10,7 @@ class Rut(number: String, dv: String) {
     val dv: String
 
     companion object Util {
-        private const val numberRgx = """^[1-9][0-9]?((\.\d{3}|\d{3})){0,2}$"""
+        private const val numberRgx = """^[1-9][0-9]?(\.?\d{3}){0,2}$"""
         private const val ZERO = "0"
         private const val K = "k"
         private const val ELEVEN = 11

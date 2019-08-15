@@ -19,7 +19,14 @@ enum class RUTFORMAT { FULL, ONLY_DASH, ESCAPED }
  */
 class Rut(number: String, dv: String) : Comparable<Rut> {
 
+    /**
+     * @property number Parte numérica del RUT
+     */
     val number: Int
+
+    /**
+     * @property dv Dígito verificador del RUT
+     */
     val dv: String
 
     /**

@@ -42,17 +42,17 @@ class RutTests {
     @Test fun test_ShouldFormatFull() {
         assertEquals("15.605.286-8", Rut("15605286", "8").format())
         assertEquals("1-9", Rut("1", "9").format())
-        assertEquals("13.239.959-k", Rut("13239959", "k").format(Rut.FORMAT.FULL))
+        assertEquals("13.239.959-k", Rut("13239959", "k").format(RUTFORMAT.FULL))
     }
 
     @Test fun test_ShouldFormatDash() {
-        assertEquals("1-9", Rut("1", "9").format(Rut.FORMAT.ONLY_DASH))
-        assertEquals("15605286-8", Rut("15605286", "8").format(Rut.FORMAT.ONLY_DASH))
+        assertEquals("1-9", Rut("1", "9").format(RUTFORMAT.ONLY_DASH))
+        assertEquals("15605286-8", Rut("15605286", "8").format(RUTFORMAT.ONLY_DASH))
     }
 
     @Test fun test_ShouldFormatEscaped() {
-        assertEquals("19", Rut("1", "9").format(Rut.FORMAT.ESCAPED))
-        assertEquals("156052868", Rut("15605286", "8").format(Rut.FORMAT.ESCAPED))
+        assertEquals("19", Rut("1", "9").format(RUTFORMAT.ESCAPED))
+        assertEquals("156052868", Rut("15605286", "8").format(RUTFORMAT.ESCAPED))
     }
 
     @Test fun test_ShouldDestructureInComponents() {
@@ -88,7 +88,8 @@ class RutTests {
             "123.456.78",
             "12.345.678.345",
             "12,345,678",
-            "0"
+            "0",
+            "12-A"
         );
         ruts.forEach {
             assertFailsWith(IllegalArgumentException::class) {

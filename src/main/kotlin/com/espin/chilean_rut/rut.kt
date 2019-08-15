@@ -2,15 +2,16 @@ package com.espin.chilean_rut
 
 import kotlin.random.Random
 
-class Rut(number: String, dv: String) {
+enum class RUTFORMAT { FULL, ONLY_DASH, ESCAPED }
 
-    enum class FORMAT { FULL, ONLY_DASH, ESCAPED }
+class Rut(number: String, dv: String) {
 
     val number: Int
     val dv: String
 
     companion object Util {
         private const val numberRgx = """^[1-9][0-9]?(\.?\d{3}){0,2}$"""
+        private const val dvRgx = """^([0-9]|k|K)$"""
         private const val ZERO = "0"
         private const val K = "k"
         private const val ELEVEN = 11
@@ -46,14 +47,14 @@ class Rut(number: String, dv: String) {
             else -> result.toString()
         }
 
-        fun random(): Rut {
-            val number = Random.nextInt(MIN_RANGE, MAX_RANGE)
+        fun random(min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): Rut {
+            val number = (if (seed == null) Random else Random(seed)).nextInt(min, max)
             return Rut(number.toString(), calcDv(number))
         }
 
-        fun randoms(n: Int = 1): List<Rut> {
+        fun randoms(n: Int = 1, min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): List<Rut> {
             val list = mutableListOf<Rut>()
-            repeat(n) { list.add(random()) }
+            repeat(n) { list.add(random(min, max, seed)) }
             return list
         }
 
@@ -61,17 +62,20 @@ class Rut(number: String, dv: String) {
 
     init {
         require(number.matches(numberRgx.toRegex())){ "Formato Inválido" }
+        require(dv.matches(dvRgx.toRegex())) { "Dígito Verificador inválido" }
         this.number = number.replace(".", "").toInt()
         this.dv = dv.toLowerCase()
     }
 
     fun isValid() : Boolean = calcDv(number) == dv
 
-    fun format(format: FORMAT = FORMAT.FULL) : String = when(format) {
-        FORMAT.FULL -> "%,d-$dv".format(number).replace(",", ".")
-        FORMAT.ONLY_DASH -> "$number-$dv"
-        FORMAT.ESCAPED -> "$number$dv"
+    fun format(format: RUTFORMAT = RUTFORMAT.FULL) : String = when(format) {
+        RUTFORMAT.FULL -> "%,d-$dv".format(number).replace(",", ".")
+        RUTFORMAT.ONLY_DASH -> "$number-$dv"
+        RUTFORMAT.ESCAPED -> "$number$dv"
     }
+
+    override fun toString(): String = "Rut($number, $dv)"
 
     operator fun component1() : Int = number
     operator fun component2() : String = dv
@@ -81,12 +85,13 @@ class Rut(number: String, dv: String) {
 fun main() {
     val rut = Rut("17679133", "0")
     println(rut.format())
-    println(rut.format(Rut.FORMAT.ONLY_DASH))
-    println(rut.format(Rut.FORMAT.ESCAPED))
+    println(rut.format(RUTFORMAT.ONLY_DASH))
+    println(rut.format(RUTFORMAT.ESCAPED))
     println(rut.isValid())
     println(Rut.calcDv(1234567))
     println(rut.number)
     println(rut.dv)
     val (number, dv) = rut
     println("$number, $dv")
+    println(rut)
 }

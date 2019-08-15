@@ -73,12 +73,11 @@ class RutTests {
     }
 
     @Test fun test_ShouldGiveUniques() {
-        val ruts = Rut.randoms(42)
+        val ruts = Rut.uniques(42)
         assertEquals(42, ruts.size)
     }
 
     @Test fun test_ShouldParseStrings() {
-        // 19253299-k
         val ruts = arrayOf("19253299-k", "19253299k", "19.253.299-k", "19.253.299k", "19.253.299K")
         ruts.forEach { assertTrue(Rut.parse(it).isValid()) }
     }
@@ -101,6 +100,13 @@ class RutTests {
                 Rut.parse(it)
             }
         }
+    }
+
+    @Test fun test_ShouldCompareRuts() {
+        val rut1 = Rut("1234", "3")
+        val rut2 = Rut("1345", "5")
+        assertTrue(rut1 < rut2)
+        assertFalse(rut1 > rut2)
     }
 
 }

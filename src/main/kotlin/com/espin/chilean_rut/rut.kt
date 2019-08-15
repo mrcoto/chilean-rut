@@ -4,7 +4,7 @@ import kotlin.random.Random
 
 enum class RUTFORMAT { FULL, ONLY_DASH, ESCAPED }
 
-class Rut(number: String, dv: String) {
+class Rut(number: String, dv: String) : Comparable<Rut> {
 
     val number: Int
     val dv: String
@@ -80,6 +80,8 @@ class Rut(number: String, dv: String) {
         RUTFORMAT.ONLY_DASH -> "$number-$dv"
         RUTFORMAT.ESCAPED -> "$number$dv"
     }
+
+    override fun compareTo(other: Rut): Int = number.compareTo(other.number)
 
     override fun toString(): String = "Rut($number, $dv)"
 

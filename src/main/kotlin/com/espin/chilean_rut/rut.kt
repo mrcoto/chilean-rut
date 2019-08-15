@@ -82,33 +82,16 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
     }
 
     override fun compareTo(other: Rut): Int = number.compareTo(other.number)
-    override fun equals(other: Any?): Boolean {
-        if (other is Rut) {
-            return other.number == number && other.dv == dv
-        }
-        return false
-    }
+    override fun equals(other: Any?): Boolean = if (other is Rut) other.number == number && other.dv == dv else false
     override fun toString(): String = "Rut($number, $dv)"
 
     operator fun component1() : Int = number
     operator fun component2() : String = dv
 
-}
+    override fun hashCode(): Int {
+        var result = number
+        result = 31 * result + dv.hashCode()
+        return result
+    }
 
-fun main() {
-    val rut = Rut("17679133", "0")
-    println(rut.format())
-    println(rut.format(RUTFORMAT.ONLY_DASH))
-    println(rut.format(RUTFORMAT.ESCAPED))
-    println(rut.isValid())
-    println(Rut.calcDv(1234567))
-    println(rut.number)
-    println(rut.dv)
-    val (number, dv) = rut
-    println("$number, $dv")
-    println(rut)
-    val rut1 = Rut("1234", "3")
-    val rut2 = Rut("1234", "3")
-    println("== : ${rut1 == rut2}")
-    println("=== : ${rut1 === rut2}")
 }

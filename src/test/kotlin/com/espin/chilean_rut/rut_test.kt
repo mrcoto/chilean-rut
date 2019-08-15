@@ -116,4 +116,11 @@ class RutTests {
         assertNotEquals(rut1, rut2)
     }
 
+    @Test fun test_ShouldCanSortList() {
+        val ruts = Rut.randoms(42).sorted()
+        for (i in 0..ruts.size - 2) {
+            assertTrue(ruts[i] < ruts[i + 1])
+        }
+    }
+
 }

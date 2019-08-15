@@ -1,6 +1,5 @@
 package com.espin.chilean_rut
 
-import java.lang.IllegalArgumentException
 import kotlin.test.*
 
 class RutTests {
@@ -107,6 +106,14 @@ class RutTests {
         val rut2 = Rut("1345", "5")
         assertTrue(rut1 < rut2)
         assertFalse(rut1 > rut2)
+    }
+
+    @Test fun test_ShouldGiveTrueOnStructuralEquality() {
+        val rut1 = Rut("1234", "3")
+        val rut2 = Rut("1345", "5")
+        val rut3 = Rut("1234", "3")
+        assertEquals(rut1, rut3)
+        assertNotEquals(rut1, rut2)
     }
 
 }

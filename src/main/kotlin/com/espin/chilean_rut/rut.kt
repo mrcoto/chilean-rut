@@ -58,6 +58,12 @@ class Rut(number: String, dv: String) {
             return list
         }
 
+        fun uniques(n: Int = 1, min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): List<Rut> {
+            val set = mutableSetOf<Rut>()
+            while(set.size < n) { set.add(random(min, max, seed)) }
+            return set.toList()
+        }
+
     }
 
     init {

@@ -72,6 +72,11 @@ class RutTests {
         assertEquals(42, ruts.size)
     }
 
+    @Test fun test_ShouldGiveUniques() {
+        val ruts = Rut.randoms(42)
+        assertEquals(42, ruts.size)
+    }
+
     @Test fun test_ShouldParseStrings() {
         // 19253299-k
         val ruts = arrayOf("19253299-k", "19253299k", "19.253.299-k", "19.253.299k", "19.253.299K")

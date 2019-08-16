@@ -33,6 +33,7 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
      * Métodos útiles del Rut
      */
     companion object Util {
+
         private const val numberRgx = """^([1-9]\d?(\.?\d{3}){0,2}|[1-9]\d{0,2}(\.?\d{3})?)$"""
         private const val dvRgx = """^([0-9]|k|K)$"""
         private const val ZERO = "0"
@@ -123,10 +124,9 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
          *
          * @return RUT aleatorio
          */
-        fun random(min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): Rut {
-            val number = (if (seed == null) Random else Random(seed)).nextInt(min, max)
-            return Rut(number.toString(), calcDv(number))
-        }
+        fun random(min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): Rut  = Rut.parse(
+            (if (seed == null) Random else Random(seed)).nextInt(min, max)
+        )
 
         /**
          * Genera una lista de RUT's de tamaño [n] de forma aleatoria
@@ -139,9 +139,7 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
          * @return Lista de tamaño [n] que contiene RUT's de forma aleatoria
          */
         fun randoms(n: Int = 1, min: Int = MIN_RANGE, max: Int = MAX_RANGE, seed: Int? = null): List<Rut> {
-            val list = mutableListOf<Rut>()
-            repeat(n) { list.add(random(min, max, seed)) }
-            return list
+            return List(n) { random(min, max, seed) }
         }
 
         /**

@@ -33,7 +33,7 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
      * Métodos útiles del Rut
      */
     companion object Util {
-        private const val numberRgx = """^[1-9][0-9]?(\.?\d{3}){0,2}$"""
+        private const val numberRgx = """^([1-9]\d?(\.?\d{3}){0,2}|[1-9]\d{0,2}(\.?\d{3})?)$"""
         private const val dvRgx = """^([0-9]|k|K)$"""
         private const val ZERO = "0"
         private const val K = "k"
@@ -72,6 +72,15 @@ class Rut(number: String, dv: String) : Comparable<Rut> {
             val number =  if (sub[sub.length - 1] == '-') sub.substring(0, sub.length - 1) else sub
             return Rut(number, dv)
         }
+
+        /**
+         * Transforma una parte numérica a un RUT
+         *
+         * @param number Parte numérica del RUT (Ej si es 123-k, sería 123)
+         *
+         * @return RUT
+         */
+        fun parse(number: Int) : Rut = Rut(number.toString(), calcDv(number))
 
         /**
          * Calcula el digito verificador

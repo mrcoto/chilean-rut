@@ -90,6 +90,11 @@ class RutTests {
         ruts.forEach { assertTrue(Rut.parse(it).isValid()) }
     }
 
+    @Test fun test_ShouldParseInts() {
+        val ruts = arrayOf(1, 12, 123, 1234, 12345, 123456, 12345678, 12345678)
+        ruts.forEach { println(it); assertTrue(Rut.parse(it).isValid()) }
+    }
+
     @Test fun test_ShouldThrowException_OnInvalidRut() {
         val ruts = arrayOf(
             "",

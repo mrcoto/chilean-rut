@@ -1,4 +1,4 @@
-package com.espin.chilean_rut
+package com.mrcoto.chilean_rut
 
 import kotlin.random.Random
 

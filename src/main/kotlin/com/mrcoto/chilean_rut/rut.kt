@@ -9,7 +9,19 @@ import kotlin.random.Random
  * - [ONLY_DASH]: Formato solo sin puntos y con guión (12345678-9)
  * - [ESCAPED]: Formato sin puntos ni guión (123456789)
  */
-enum class RUTFORMAT { FULL, ONLY_DASH, ESCAPED }
+enum class RUTFORMAT {
+    /**
+     * Formato con puntos y guión (12.345.678-9)
+     */
+    FULL,
+    /**
+     * Formato solo sin puntos y con guión (12345678-9)
+     */
+    ONLY_DASH,
+    /**
+     * Formato sin puntos ni guión (123456789)
+     */
+    ESCAPED }
 
 /**
  * Rut Chileno

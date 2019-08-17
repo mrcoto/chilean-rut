@@ -29,15 +29,12 @@ La versión corresponde a: `'com.mrcoto:chilean-rut:1.0'`.
 
 ~~~gradle
 repositories {
-    mavenCentral()
-    maven {
-        url  "https://dl.bintray.com/mrcoto/chilean-rut"
-    }
+    jcenter()
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    compile 'com.mrcoto:chilean-rut:1.0' // <-- Importante
+    ...
+    compile 'com.mrcoto:chilean-rut:1.0'
 }
 ~~~ 
 

@@ -145,10 +145,10 @@ fun main() {
 Se puede generar un RUT aleatorio, una lista de RUT aleatorio, o 
 una lista única de RUT aleatorio.
 
-Como plus, como los RUT son comparables, se puede ordenar la 
+Como los RUT son comparables, se puede ordenar la 
 lista resultante.
 
-**Nota:** Por defecto, se genera un RUT entre 4.000.000 a 8.000.000,
+**Nota:** Por defecto, se genera un RUT entre 4.000.000 a 80.000.000,
 se deben cambiar los parámetros min y max, para generar entre otro rango.
 
 ~~~kotlin

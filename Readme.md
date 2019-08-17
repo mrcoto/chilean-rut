@@ -185,3 +185,7 @@ fun main() {
     println(rut) // Rut(12345678, k)
 }
 ~~~
+
+## Licencia
+
+Esta librería se distribuye bajo la licencia MIT.

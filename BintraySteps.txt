@@ -1,0 +1,4 @@
+Comandos:
+gradle wrapper
+gradlew clean
+gradle build dokka bintrayUpload

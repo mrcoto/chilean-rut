@@ -11,6 +11,9 @@ plugins {
     id "maven-publish"
 }
 
+apply plugin: 'kotlin'
+apply plugin: 'com.jfrog.bintray'
+
 def GROUP_ID="com.mrcoto"
 def ARTIFACT_ID="chilean-rut"
 
@@ -22,15 +25,13 @@ def SITE_URL="https://github.com/mrcoto/chilean-rut"
 def VCS_URL="https://github.com/mrcoto/chilean-rut.git"
 def LIBRARY_VERSION_NAME=1.0
 
-apply plugin: 'com.jfrog.bintray'
-
-group GROUP_ID
-version LIBRARY_VERSION_NAME
-
 repositories {
     mavenCentral()
     jcenter()
 }
+
+group GROUP_ID
+version LIBRARY_VERSION_NAME
 
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
@@ -38,13 +39,12 @@ sourceSets {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version: '1.3.41'
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-common', version: '1.3.41'
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-annotations-common', version: '1.3.41'
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test-junit5', version: '1.3.41'
-
-    test.useJUnitPlatform()
 }
 
 dokka {
@@ -63,11 +63,7 @@ afterEvaluate {
     project.publishing.publications.all {
         // rename artifacts
         groupId = GROUP_ID
-        if (it.name.contains('metadata')) {
-            artifactId = "$ARTIFACT_ID"
-        } else {
-            artifactId = "$ARTIFACT_ID-$name"
-        }
+        artifactId = "$ARTIFACT_ID"
     }
 }
 
@@ -97,6 +93,34 @@ bintray {
             name = LIBRARY_VERSION_NAME
             vcsTag = LIBRARY_VERSION_NAME
             released = new Date()
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: project.javadoc) {
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar, javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId project.bintray.pkg.name
+            from components.java
+
+            artifact sourcesJar {
+                archiveClassifier.set("sources")
+            }
+            artifact javadocJar {
+                archiveClassifier.set("javadoc")
+            }
         }
     }
 }

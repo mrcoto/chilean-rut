@@ -8,7 +8,7 @@ de identificación utilizado en Chile (RUT).
 * [Instalación](#instalacin)
     - [Versión](#versin)
     - [Gradle](#gradle)
-* [Librería](#librera)
+* [Uso](#uso)
     - [Instanciar RUT](#instanciar-rut)
     - [Validar RUT](#validar-rut)
     - [Calcular DV](#calcular-dv)
@@ -17,6 +17,7 @@ de identificación utilizado en Chile (RUT).
     - [Comparación](#comparacin)
     - [Generación Aleatoria](#generacin-aleatoria)
     - [toString](#tostring)
+* [Licencia](#licencia)
 
 ## Instalación
 
@@ -40,7 +41,7 @@ dependencies {
 }
 ~~~ 
 
-## Librería
+## Uso
 
 Los RUT se dividen en **parte numérica** y **dígito verificador (dv)**.
 - La **parte numérica** debe contener entre **1 y 8 dígitos** (sin comenzar con 0)
